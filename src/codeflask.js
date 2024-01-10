@@ -25,7 +25,6 @@
 
   // import "prismjs-components-importer/esm"; // ALL - Massivly Increases Bundle size!
 
-  import "prismjs-components-importer/esm/prism-iecst"; 
   import "prismjs-components-importer/esm/prism-abap";
   import "prismjs-components-importer/esm/prism-apacheconf";
   import "prismjs-components-importer/esm/prism-bash";
@@ -53,6 +52,7 @@
   import "prismjs-components-importer/esm/prism-less";
   import "prismjs-components-importer/esm/prism-lisp";
   import "prismjs-components-importer/esm/prism-makefile";
+  import "prismjs-components-importer/esm/prism-markdown";
   import "prismjs-components-importer/esm/prism-nginx";
   import "prismjs-components-importer/esm/prism-objectivec";
   import "prismjs-components-importer/esm/prism-ocaml";
@@ -77,13 +77,8 @@
   import NiceSelect from "nice-select2/dist/js/nice-select2";
   import NiceSelectStyle from "nice-select2/dist/css/nice-select2.css";
 
-
-
-
   // console.log(Prism.languages)
 
-
- 
  class EditorJsCodeFlask {
    /**
     * Default placeholder for EditorJsCodeFlask Tool
