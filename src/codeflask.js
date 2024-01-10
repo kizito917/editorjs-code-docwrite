@@ -25,13 +25,53 @@
 
   // import "prismjs-components-importer/esm"; // ALL - Massivly Increases Bundle size!
 
-  import "prismjs-components-importer/esm/prism-iecst"; // Structured Text
-  import "prismjs-components-importer/esm/prism-markdown"; 
-  import "prismjs-components-importer/esm/prism-json"; 
-  import "prismjs-components-importer/esm/prism-python";
+  import "prismjs-components-importer/esm/prism-iecst"; 
+  import "prismjs-components-importer/esm/prism-abap";
+  import "prismjs-components-importer/esm/prism-apacheconf";
   import "prismjs-components-importer/esm/prism-bash";
+  import "prismjs-components-importer/esm/prism-c";
+  import "prismjs-components-importer/esm/prism-clojure";
+  import "prismjs-components-importer/esm/prism-coffeescript";
+  import "prismjs-components-importer/esm/prism-cpp";
+  import "prismjs-components-importer/esm/prism-csharp";
+  import "prismjs-components-importer/esm/prism-dart";
+  import "prismjs-components-importer/esm/prism-docker";
+  import "prismjs-components-importer/esm/prism-elixir";
+  import "prismjs-components-importer/esm/prism-erb";
+  import "prismjs-components-importer/esm/prism-erlang";
+  import "prismjs-components-importer/esm/prism-excel-formula";
+  import "prismjs-components-importer/esm/prism-fsharp";
+  import "prismjs-components-importer/esm/prism-go";
+  import "prismjs-components-importer/esm/prism-graphql";
+  import "prismjs-components-importer/esm/prism-haml";
+  import "prismjs-components-importer/esm/prism-haskell";
+  import "prismjs-components-importer/esm/prism-http";
+  import "prismjs-components-importer/esm/prism-toml";
+  import "prismjs-components-importer/esm/prism-java";
+  import "prismjs-components-importer/esm/prism-julia";
+  import "prismjs-components-importer/esm/prism-kotlin";
+  import "prismjs-components-importer/esm/prism-less";
+  import "prismjs-components-importer/esm/prism-lisp";
+  import "prismjs-components-importer/esm/prism-makefile";
+  import "prismjs-components-importer/esm/prism-nginx";
+  import "prismjs-components-importer/esm/prism-objectivec";
+  import "prismjs-components-importer/esm/prism-ocaml";
+  import "prismjs-components-importer/esm/prism-perl";
+  import "prismjs-components-importer/esm/prism-php";
+  import "prismjs-components-importer/esm/prism-powershell";
+  import "prismjs-components-importer/esm/prism-purebasic";
+  import "prismjs-components-importer/esm/prism-python";
+  import "prismjs-components-importer/esm/prism-r";
+  import "prismjs-components-importer/esm/prism-ruby";
+  import "prismjs-components-importer/esm/prism-rust";
+  import "prismjs-components-importer/esm/prism-scala";
+  import "prismjs-components-importer/esm/prism-scss";
+  import "prismjs-components-importer/esm/prism-solidity";
+  import "prismjs-components-importer/esm/prism-sql";
+  import "prismjs-components-importer/esm/prism-swift";
+  import "prismjs-components-importer/esm/prism-typescript";
+  import "prismjs-components-importer/esm/prism-yaml";
  
-
   import CodeFlask from 'codeflask';
 
   import NiceSelect from "nice-select2/dist/js/nice-select2";
@@ -98,9 +138,9 @@
 
      // let x = (x === undefined) ? your_default_value : x;
      this.data = {}
-     this.data.code = (data.code === undefined) ? '// Hello World' : data.code;
-     this.data.language = (data.language === undefined) ? 'plain' : data.language;
-     this.data.showlinenumbers = (data.showlinenumbers === undefined) ? true : data.showlinenumbers;
+     this.data.code = (data.code === undefined) ? '' : data.code;
+     this.data.language = (data.language === undefined) ? 'javascript' : data.language;
+     this.data.showlinenumbers = config.showlinenumbers;
      this.data.editorInstance = {}
 
     //  console.log(this.data)
@@ -132,63 +172,18 @@
     * @returns {HTMLDivElement}
     */
    render() {
-
     this._element = document.createElement('div');
-    this._element.classList.add('editorjs-codeFlask_Wrapper')
+    this._element.classList.add('editorjs-codeFlask_Wrapper');
     let editorElem = document.createElement('div');
-    editorElem.classList.add('editorjs-codeFlask_Editor')
+    editorElem.classList.add('editorjs-codeFlask_Editor');
     let langdisplay = document.createElement('div');
-    langdisplay.classList.add('editorjs-codeFlask_LangDisplay')
-
-    langdisplay.innerHTML = this.data.language
-
-    this._element.appendChild(editorElem)
-    this._element.appendChild(langdisplay)
-
-    this.data.editorInstance = new CodeFlask(editorElem, { 
-      language: this.data.language, 
-      lineNumbers : this.data.showlinenumbers,
-      readonly : this.readOnly
-    });
-
-    this.data.editorInstance.onUpdate((code) => {
-
-      let _length = code.split('\n').length
-      this._debounce(this._updateEditorHeight(_length))
-
-    });
-
-    this.data.editorInstance.addLanguage(this.data.language, Prism.languages[this.data.language]);
-    this.data.editorInstance.updateCode(this.data.code);
-
-    return this._element
-   }
-
-  _updateEditorHeight(length){
-
-    let _height = (length * 21) + 10
-    if (_height < 60){ _height = 60 }
-
-    this._element.style.height = _height + 'px';
-  }
-
-
-  _debounce(func, timeout = 500){
-    let timer;
-    return (...args) => {
-      clearTimeout(timer);
-      timer = setTimeout(() => { func.apply(this, args); }, timeout);
-    };
-  }
-
-   renderSettings() {
-    const settingsContainer = document.createElement('div');
-
-
-
-
+    langdisplay.classList.add('editorjs-codeFlask_LangDisplay');
+    let settingsContainer = document.createElement('div');
+    settingsContainer.classList.add('editorjs-codeFlask_LangSelector');
     let languagesSelect = document.createElement("select");
     languagesSelect.classList.add("small");
+
+    langdisplay.innerHTML = this.data.language
 
     //sort available languages alphabetically (ignore case)
     let languages = Object.keys(Prism.languages).sort(function (a, b) {
@@ -215,36 +210,53 @@
       this._updateLanguage(event.target.value)
     });
 
-
-    // Disabled until codeflask supports toggle of line numbers
-    // const settingsButton = document.createElement('div');
-    // settingsButton.classList.add(this._CSS.settingsButton);
-    // settingsButton.innerHTML = '<small>123</small>'
-
-
-    // settingsButton.addEventListener('click', (e) => {
-    //   console.log(e)
-    //   e.target.classList.toggle(this._CSS.settingsButtonActive)
-    //   this._toggleLineNumbers()
-    // });
-
-
-
+    // Append language select element to langSelector div
     settingsContainer.appendChild(languagesSelect);
-    new NiceSelect(languagesSelect, {searchable : true, placeholder : "Language..."});
-    
-    // settingsContainer.appendChild(settingsButton);
+    new NiceSelect(languagesSelect, {searchable : true, placeholder : (this.data.language === undefined) ? "Language...": this.data.language});
 
-    return settingsContainer;
+    // Append other created elements to parent element
+    this._element.appendChild(editorElem)
+    this._element.appendChild(langdisplay)
+    this._element.appendChild(settingsContainer);
+
+    this.data.editorInstance = new CodeFlask(editorElem, { 
+      language: this.data.language, 
+      lineNumbers : this.data.showlinenumbers,
+      readonly : this.readOnly
+    });
+
+    this.data.editorInstance.onUpdate((code) => {
+      let _length = code.split('\n').length
+      this._debounce(this._updateEditorHeight(_length))
+    });
+
+    this.data.editorInstance.addLanguage(this.data.language, Prism.languages[this.data.language]);
+    this.data.editorInstance.updateCode(this.data.code);
+
+    return this._element
+   }
+
+  _updateEditorHeight(length){
+
+    let _height = (length * 21) + 10
+    if (_height < 60){ _height = 60 }
+
+    this._element.style.height = _height + 'px';
+  }
+
+
+  _debounce(func, timeout = 500){
+    let timer;
+    return (...args) => {
+      clearTimeout(timer);
+      timer = setTimeout(() => { func.apply(this, args); }, timeout);
+    };
   }
 
   _toggleLineNumbers = (thing) => {
     this.data.showlinenumbers = !this.data.showlinenumbers
-
     // replace this with a native method for codeflask, if it gets implemented.
     // for now, we will completely destroy the codeflask instance, and rebuild it - lazy but effective
-
-
   }
 
   _updateLanguage = (lang) => {
@@ -252,8 +264,6 @@
     this._element.querySelector('.editorjs-codeFlask_LangDisplay').innerHTML = this.data.language
     this.data.editorInstance.updateLanguage(this.data.language)
   }
- 
-
  
    /**
     * Extract Tool's data from the view
@@ -280,7 +290,6 @@
      return true;
    }
 
- 
    /**
     * Icon and title for displaying at the Toolbox
     *
@@ -289,7 +298,7 @@
    static get toolbox() {
      return {
        icon: icon,
-       title: 'CodeFlask'
+       title: 'Code'
      };
    }
  }

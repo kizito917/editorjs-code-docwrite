@@ -3,7 +3,7 @@
 	border: 1px solid #dcdfe6;
 	border-radius: 5px;
 	background-color: #f0f2f5;
-    margin-bottom: 10px;
+    margin-bottom: 3.5rem
 }
 
 .editorjs-codeFlask_Wrapper .codeflask {
@@ -21,9 +21,21 @@
 	background-color: #dcdfe6;
 	padding: 5px;
 	padding-left: 10px;
-	padding-right: 10px;
+	padding-right: 20px;
 	right: 0;
 	bottom: 0;
+	border-bottom-right-radius: 5px;
+	border-top-left-radius: 5px;
+}
+
+.editorjs-codeFlask_Wrapper .editorjs-codeFlask_LangSelector {
+	position: absolute;
+	height: 20px;
+	line-height: 20px;
+	font-size: 10px;
+	color: #999;
+	left: 0;
+	top: -36px;
 	border-bottom-right-radius: 5px;
 	border-top-left-radius: 5px;
 }
