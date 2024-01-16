@@ -149,6 +149,7 @@
     * @param {KeyboardEvent} e - key up event
     */
    onKeyUp(e) {
+    console.log('yeeeeee');
      if (e.code !== 'Backspace' && e.code !== 'Delete') {
        return;
      }
